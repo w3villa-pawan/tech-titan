@@ -21,6 +21,8 @@ gem "redis", ">= 4.0.1"
 gem "mysql2"
 
 gem "devise" 
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-google-oauth2'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
