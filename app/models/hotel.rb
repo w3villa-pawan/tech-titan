@@ -8,6 +8,7 @@ class Hotel < ApplicationRecord
   has_many :bookings
   has_many :chats
   has_many :reviews
+  has_many_attached :images
 
   validates :name, presence: true
   validates :description, presence: true
@@ -22,12 +23,16 @@ class Hotel < ApplicationRecord
     return if description.present? # Skip if description is already provided
 
     client = Groq::Client.new
-    prompt = "Generate a hotel description for a hotel named '#{name}', located in #{location}, with #{total_rooms} rooms."
+    prompt = "Generate a hotel description for a hotel named '#{name}', with #{total_rooms} rooms."
     response = client.chat(prompt)
 
     if response && response['content'].present?
       self.description = response['content']
     end
+  end
+
+  def remove_image_url(attachment_id)
+    Rails.application.routes.url_helpers.remove_hotel_image_path(id: self.id, attachment_id: attachment_id)
   end
 
 end
