@@ -8,6 +8,7 @@ class Hotel < ApplicationRecord
   has_many :bookings
   has_many :chats
   has_many :reviews
+  has_one :address
   has_many_attached :images
 
   validates :name, presence: true

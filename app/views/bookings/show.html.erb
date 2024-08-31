@@ -1,38 +1,43 @@
-<!-- app/views/bookings/show.html.erb -->
-<h1>Booking Details</h1>
+<%= render "users/shared/header" %>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h2 class="mb-0">Booking Details</h2>
+        </div>
+        <div class="card-body">
+          <p class="mb-3">
+            <strong>ID:</strong> <%= @booking.id %>
+          </p>
 
-<p>
-  <strong>ID:</strong>
-  <%= @booking.id %>
-</p>
+          <p class="mb-3">
+            <strong>User:</strong> <%= @booking.user.email %>
+          </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @booking.user.email %>
-</p>
+          <p class="mb-3">
+            <strong>Hotel:</strong> <%= @booking.hotel.name %>
+          </p>
 
-<p>
-  <strong>Hotel:</strong>
-  <%= @booking.hotel.name %>
-</p>
+          <p class="mb-3">
+            <strong>Check In:</strong> <%= @booking.check_in.strftime('%B %d, %Y %H:%M') %>
+          </p>
 
-<p>
-  <strong>Check In:</strong>
-  <%= @booking.check_in %>
-</p>
+          <p class="mb-3">
+            <strong>Check Out:</strong> <%= @booking.check_out.strftime('%B %d, %Y %H:%M') %>
+          </p>
 
-<p>
-  <strong>Check Out:</strong>
-  <%= @booking.check_out %>
-</p>
+          <p class="mb-3">
+            <strong>Price:</strong> <%= number_to_currency(@booking.price) %>
+          </p>
 
-<p>
-  <strong>Price:</strong>
-  <%= number_to_currency(@booking.price) %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @booking.status %>
-</p>
-
+          <p class="mb-0">
+            <strong>Status:</strong> <%= @booking.status %>
+          </p>
+        </div>
+      </div>
+      
+      <%= link_to 'Back to Bookings', bookings_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
