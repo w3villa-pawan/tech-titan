@@ -23,7 +23,6 @@ gem "mysql2"
 gem "devise" 
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-google-oauth2'
-gem 'simple_form'
 
 # gem 'webpacker'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
