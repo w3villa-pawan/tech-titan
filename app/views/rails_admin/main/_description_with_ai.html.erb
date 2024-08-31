@@ -1,0 +1,62 @@
+<!-- app/views/rails_admin/main/_description_with_ai.html.erb -->
+<div class="form-group">
+  <label for="hotel_description">Description</label>
+  <textarea id="hotel_description" name="hotel[description]" class="form-control"><%= form.object.description %></textarea>
+  <button type="button" id="generate-description" class="btn btn-primary mt-2">Generate Description</button>
+</div>
+
+<div id="ai-description-modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">AI-Generated Description</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="ai-generated-description"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="use-description" class="btn btn-success">Use this Description</button>
+        <button type="button" id="close-modal" class="btn btn-secondary">Close</button>
+      </div>    
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('generate-description').addEventListener('click', function() {
+      const hotelName = document.getElementById('hotel_name').value;
+      const hotelType = document.getElementById('hotel_hotel_type_id').value; // Assuming you have this field in the form
+
+      fetch('/ai/generate_description', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ name: hotelName, type: hotelType })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ai-generated-description').textContent = data.generated_text;
+        $('#ai-description-modal').modal('show');
+      })
+      .catch(() => {
+        alert('Error generating description');
+      });
+    });
+
+    document.getElementById('use-description').addEventListener('click', function() {
+      const generatedText = document.getElementById('ai-generated-description').textContent;
+      document.getElementById('hotel_description').value = generatedText;
+      $('#ai-description-modal').modal('hide');
+    });
+
+    document.getElementById('close-modal').addEventListener('click', function() {
+      $('#ai-description-modal').modal('hide');
+    });
+  });
+</script>

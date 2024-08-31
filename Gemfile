@@ -66,6 +66,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem "groq", "~> 0.3.2"
 
-#stripe for payment functionality 
 gem 'stripe'
+
