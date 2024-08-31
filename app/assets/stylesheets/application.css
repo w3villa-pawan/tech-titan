@@ -12,4 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require rails_admin
  */
+ @import "rails_admin";
+ @import "rails_admin/styles/base/variables";

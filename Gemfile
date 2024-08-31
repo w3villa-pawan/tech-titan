@@ -55,6 +55,12 @@ group :development do
   gem "web-console"
 end
 
+gem 'rails_admin', '~> 3.0'
+
+gem 'webpacker'
+
+gem 'sassc-rails'
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
