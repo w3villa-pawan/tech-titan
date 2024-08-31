@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_060324) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.datetime "check_in"
     t.datetime "check_out"
     t.decimal "price", precision: 10
+    t.string "status", default: "booked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["hotels_id"], name: "index_bookings_on_hotels_id"
@@ -119,6 +120,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "hotels_id"
+    t.integer "no_of_people", default: 1
+    t.decimal "price", precision: 10, default: "0"
+    t.boolean "active", default: true
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_rooms_on_hotels_id"
   end
 
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
