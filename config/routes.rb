@@ -6,9 +6,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
-
+  resources :bookings, only: [:index,:show]
   resources :hotels do
-    resources :bookings, only: [:new, :create, :show, :edit, :update, :destroy]
+    resources :bookings, only: [:new, :create]
   end
   resources :hotels
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

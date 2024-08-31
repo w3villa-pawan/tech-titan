@@ -3,6 +3,11 @@ class BookingsController < ApplicationController
     before_action :set_hotel, only: [:new, :create]
     before_action :set_booking, only: [:show, :edit, :update, :destroy]
   
+
+    def index
+      @bookings = Booking.all
+    end
+
     def new
       @booking = @hotel.bookings.build
     end
@@ -12,7 +17,7 @@ class BookingsController < ApplicationController
       @booking.user = current_user
   
       if @booking.save
-        redirect_to root_path, notice: 'Booking was successfully created.'
+        redirect_to @booking, notice: 'Booking was successfully created.'
       else
         render :new
       end
