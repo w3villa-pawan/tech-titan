@@ -4,7 +4,7 @@
         <div class="row row-cols-1 row-cols-md-4 g-4">
         <% @hotels.each do |hotel| %>
             <div class="col">
-                <a href="/landing-page-show" class="card-link">
+              <%= link_to hotel_path(hotel), class: "card-link" do %>
                     <div class="card">
                         <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="Stunning Views">
                     </div>
@@ -19,6 +19,7 @@
                 <div class="card-footer">
                     <small class="text-muted">Available Rooms: <%= hotel.available_rooms %></small>
                 </div>
+                <% end %>
             </div>
         <% end %>
         </div>
