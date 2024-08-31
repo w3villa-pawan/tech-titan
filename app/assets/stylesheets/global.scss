@@ -1,7 +1,7 @@
 .auth-page {
     .card0 {
-      box-shadow: 0px 4px 8px 0px #757575;
-      border-radius: 0px;
+    //   box-shadow: 0px 4px 8px 0px #757575;
+    //   border-radius: 0px;
   
       .row.d-flex {
         .col-lg-6 {
@@ -57,7 +57,8 @@
   
               .facebook,
               .twitter,
-              .linkedin {
+              .linkedin,
+              .google {
                 text-align: center;
                 margin-right: 1rem;
                 font-size: 18px;
@@ -66,6 +67,10 @@
                 width: 35px;
                 height: 35px;
                 cursor: pointer;
+                border: none;
+                background: none;
+                padding: 0;
+                display: inline-block;
   
                 &.facebook {
                   background-color: #3b5998;
@@ -76,6 +81,11 @@
                   background-color: #1DA1F2;
                   color: #fff;
                 }
+
+                &.google {
+                    background-color: #1DA1F2;
+                    color: #fff;
+                  }
   
                 &.linkedin {
                   background-color: #2867B2;
