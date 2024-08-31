@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
+  resources :users do
+    post 'create_chat', on: :member
+    resources :chats, only: [:index, :show] do
+      resources :messages, only: [:create]
+    end
+  end
 end

@@ -4,7 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable,omniauth_providers: [:google_oauth2]
 
-
+  has_many :messages
+  has_many :sent_chats, class_name: "Chat", foreign_key: "sender_id"
+  has_many :received_chats, class_name: "Chat", foreign_key: "receiver_id"
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
