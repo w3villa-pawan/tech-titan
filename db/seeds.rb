@@ -40,6 +40,43 @@ hotel2 = Hotel.create!(
   available_rooms: 30
 )
 
+
+# Create Addresses
+Address.create!(
+  firstname: 'John',
+  lastname: 'Doe',
+  address1: '456 Main Street',
+  address2: 'Suite 101',
+  city: 'Metropolis',
+  zipcode: '54321',
+  phone: '555-123-4567',
+  state_name: 'NY',
+  alternative_phone: '555-765-4321',
+  company: 'Grand Palace Hotel',
+  longitude: '-74.0060',
+  latitude: '40.7128',
+  country_name: 'USA',
+  hotel_id: hotel1.id
+)
+
+Address.create!(
+  firstname: 'Jane',
+  lastname: 'Smith',
+  address1: '789 Elm Street',
+  address2: 'Apt 202',
+  city: 'Smalltown',
+  zipcode: '67890',
+  phone: '555-987-6543',
+  state_name: 'CA',
+  alternative_phone: '555-654-3210',
+  company: 'Budget Inn',
+  longitude: '-118.2437',
+  latitude: '34.0522',
+  country_name: 'USA',
+  hotel_id: hotel2.id
+)
+
+
 # Create Properties
 property1 = Property.create!(name: 'Free Wi-Fi', description: 'Complimentary Wi-Fi throughout the hotel.', active: true, unique_name: 'free_wifi')
 property2 = Property.create!(name: 'Gym', description: 'Fully equipped fitness center.', active: true, unique_name: 'gym')
