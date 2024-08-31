@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     unless @chat
       @chat = Chat.create(sender_id: sender_id, receiver_id: receiver_id)
     end
-
+    redirect_to user_chat_path(current_user, @chat)    
   end
 
   def index

@@ -15,12 +15,12 @@
   </div>
 
   <%= form_with(model: [@user, @chat, @message], 
-    local: true, 
-    data: { action: "turbo:submit-end->chat-subscription#resetForm" }, 
+    remote: true, 
+    data: { turbo: false, action: "turbo:submit-end->chat-subscription#resetForm" }, 
     class: "d-flex") do |form| %>
 
   <%= form.text_area :body, 
-      placeholder: "Message to #{profile_to_show.nickname}", 
+      placeholder: "Message to #{profile_to_show.fullname}", 
       class: "flex-grow-1", 
       rows: 3 %>
 

@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  protect_from_forgery
+  before_action :authenticate_user!
   before_action :find_chat
 
   def create
@@ -7,14 +9,9 @@ class MessagesController < ApplicationController
     @message.receiver_id = @chat.receiver_id
 
     if @message.save
-      ChatChannel.broadcast_to(
-        @message.chat,
-        render_to_string(partial: "message", locals: { message: @message })
-      )
-      head :ok
-    else
-      render json: { error: @message.errors.full_messages }, status: :unprocessable_entity
-    end
+      ActionCable.server.broadcast "chat_channel", { mod_message: render_to_string(partial: 'message', locals: { message: @message }) }
+      redirect_to request.referrer
+   end
   end
 
   private
