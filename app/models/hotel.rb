@@ -6,7 +6,7 @@ class Hotel < ApplicationRecord
   has_many :properties, through: :hotel_properties
   has_many :rooms
   has_many :bookings
-  # has_many :chats
+  has_many :chats
   has_many :reviews
 
   validates :name, presence: true
