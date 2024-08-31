@@ -131,6 +131,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_060324) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
+
   end
 
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
