@@ -30,6 +30,7 @@ class PaymentsController < ApplicationController
         else 
             finalize_payment(payment_intent)
             @payment.update(payment_status: payment_intent.status, payment_date: Time.zone.now, amount: payment_intent.amount, payment_method: payment_intent.payment_method_types[0])
+            @payment.booking.update(status: 'booked')
         end
 
       redirect_to root_path, notice: 'Payment completed successfully!'
