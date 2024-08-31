@@ -30,7 +30,6 @@ class PaymentsController < ApplicationController
         else 
             finalize_payment(payment_intent)
             @payment.update(payment_status: payment_intent.status, payment_date: Time.zone.now, amount: payment_intent.amount, payment_method: payment_intent.payment_method_types[0])
-            binding.pry
         end
 
       redirect_to root_path, notice: 'Payment completed successfully!'
@@ -64,7 +63,6 @@ class PaymentsController < ApplicationController
   end
 
   def complete_payment_url
-    binding.pry
     "#{API_CONFIG['host_url']}/hotels/#{@hotel.id}/bookings/#{@booking.id}/payments/complete"
   end
 
