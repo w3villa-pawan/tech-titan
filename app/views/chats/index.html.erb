@@ -1,0 +1,15 @@
+<div>
+  <% @chats.each do |chat| %>
+    <% user = chat.sender_id == @user.id ? chat.receiver : chat.sender %>
+    <% last_message = chat.messages.last %>
+    <%= link_to user_chat_path(@user, chat) do %>
+      <div class="private_chat__index__cards">
+        <div class="private_chat__cards__text">
+          <h3><%= user.fullname %></h3>
+          <p><%= user.updated_at.strftime("%d/%m/%Y %H:%M:%S") %></p>
+          <p><%= last_message.body if last_message %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

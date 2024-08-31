@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   }
 
   resources :hotels do
-    resources :bookings, only: [:new, :create, :show, :edit, :update, :destroy]
+    resources :bookings, only: [:new, :create, :show, :edit, :update, :destroy] do
+      resources :payments, only: [:new, :create, :index]
+      get 'payments/complete', to: 'payments#complete'
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -22,4 +25,10 @@ Rails.application.routes.draw do
   post 'ai/generate_description', to: 'ai#generate_description'
 
   # Defines the root path route ("/")
+  resources :users do
+    post 'create_chat', on: :member
+    resources :chats, only: [:index, :show] do
+      resources :messages, only: [:create]
+    end
+  end
 end
