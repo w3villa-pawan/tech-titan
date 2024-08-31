@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_075324) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.datetime "check_in"
     t.datetime "check_out"
     t.decimal "price", precision: 10
+    t.string "status", default: "booked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["hotels_id"], name: "index_bookings_on_hotels_id"
@@ -55,13 +56,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
   end
 
   create_table "hotel_properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "hotels_id"
-    t.bigint "properties_id"
     t.boolean "display", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_hotel_properties_on_hotels_id"
-    t.index ["properties_id"], name: "index_hotel_properties_on_properties_id"
+    t.bigint "hotel_id"
+    t.bigint "property_id"
+    t.index ["hotel_id"], name: "index_hotel_properties_on_hotel_id"
+    t.index ["property_id"], name: "index_hotel_properties_on_property_id"
   end
 
   create_table "hotel_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -121,6 +122,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "hotels_id"
+    t.integer "no_of_people", default: 1
+    t.decimal "price", precision: 10, default: "0"
+    t.boolean "active", default: true
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_rooms_on_hotels_id"
+  end
+
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "role_id"
@@ -145,4 +157,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "hotel_properties", "hotels"
+  add_foreign_key "hotel_properties", "properties"
 end

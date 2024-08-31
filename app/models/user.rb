@@ -3,7 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable,omniauth_providers: [:google_oauth2]
-
+  
+  has_many :bookings
+  has_many :hotels
+  has_many :reviews
+  has_many :user_roles
+  has_many :roles, through: :user_roles
 
 
   def self.from_omniauth(auth)
