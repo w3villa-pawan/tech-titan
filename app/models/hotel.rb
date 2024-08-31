@@ -8,7 +8,7 @@ class Hotel < ApplicationRecord
   has_many :bookings
   has_many :chats
   has_many :reviews
-
+  has_one :address
   validates :name, presence: true
   validates :description, presence: true
   validates :hotel_type, presence: true
