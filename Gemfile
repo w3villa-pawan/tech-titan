@@ -63,3 +63,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+
+#stripe for payment functionality 
+gem 'stripe'
+
+gem 'pry'
