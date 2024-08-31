@@ -14,6 +14,7 @@
                     <p class="mt-1 text-muted small"><%= hotel.description %></p>
                     <p class="mt-1 text-dark small">
                     <span class="fw-semibold">$80</span> night
+                    <%= button_to "Chat", create_chat_user_path(hotel.user), method: :post, class: "btn btn-primary" %>
                     </p>
                 </div>
                 <div class="card-footer">

@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
+  def previous_bookings
+    @bookings = Booking.where(user_id: current_user.id)
+  end
+
   def create_chat
     @selected_profile = User.find(params[:id])
     if @selected_profile.id == current_user.id
