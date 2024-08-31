@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  post 'ai/generate_description', to: 'ai#generate_description'
 
   # Defines the root path route ("/")
 end
