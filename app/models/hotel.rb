@@ -22,7 +22,7 @@ class Hotel < ApplicationRecord
     return if description.present? # Skip if description is already provided
 
     client = Groq::Client.new
-    prompt = "Generate a hotel description for a hotel named '#{name}', located in #{location}, with #{total_rooms} rooms."
+    prompt = "Generate a hotel description for a hotel named '#{name}', with #{total_rooms} rooms."
     response = client.chat(prompt)
 
     if response && response['content'].present?
