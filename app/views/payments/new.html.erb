@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment Form</title>
+  <style>
+    /* Basic styles for form */
+    #payment-form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    #card-element {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #card-element {
+      height: 40px;
+    }
+
+    .error {
+      color: red;
+      margin-top: 5px;
+    }
+
+    .success {
+      color: green;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Complete Your Payment</h2>
+
+  <%= form_with url: hotel_booking_payments_path(@hotel, @booking), method: :post, id: 'payment-form' do %>
+
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="text" name="amount" id="amount" value="<%= @amount %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="payment_method">Payment Method</label>
+      <select id="payment_method" name="payment_method_id" required>
+        <!-- Options will be populated by JavaScript -->
+      </select>
+    </div>
+
+    <!-- Stripe Elements container -->
+    <div class="form-group">
+      <label for="card-element">Card Details</label>
+      <div id="card-element"><!-- A Stripe Element will be inserted here. --></div>
+      <div id="card-errors" class="error"></div>
+    </div>
+
+    <button type="submit">Pay</button>
+  <% end %>
+
+  <!-- Stripe.js library -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var stripe = Stripe('<%= API_CONFIG['stripe_publishable_key'] %>');
+      var elements = stripe.elements();
+      var card = elements.create('card');
+      card.mount('#card-element');
+      
+      var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      function loadPaymentMethods() {
+        var paymentMethodSelect = document.getElementById('payment_method');
+        var paymentMethods = [
+          { id: 'pm_card_visa', label: 'Visa Card' },
+          { id: 'pm_card_mastercard', label: 'MasterCard' }
+        ];
+
+        paymentMethods.forEach(function(method) {
+          var option = document.createElement('option');
+          option.value = method.id;
+          option.text = method.label;
+          paymentMethodSelect.appendChild(option);
+        });
+      }
+
+      loadPaymentMethods();
+
+      var form = document.getElementById('payment-form');
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createPaymentMethod({
+          type: 'card',
+          card: card
+        }).then(function(result) {
+          if (result.error) {
+            document.getElementById('card-errors').textContent = result.error.message;
+          } else {
+            var payment_form = document.getElementById('payment-form');
+
+            fetch(payment_form.action, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken
+              },
+              body: JSON.stringify({
+                payment_method_id: document.getElementById('payment_method').value,
+                amount: document.getElementById('amount').value,
+              }),
+            }).then(function(response) {
+              return response.json();
+            }).then(function(paymentResult) {
+              if (paymentResult.redirect_url) {
+                window.location.href = paymentResult.redirect_url;
+              } else {
+                document.getElementById('card-errors').textContent = 'Payment failed.';
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
