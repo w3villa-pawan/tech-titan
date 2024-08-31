@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_054304) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -101,6 +101,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_054304) do
     t.string "unique_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "hotels_id"
+    t.integer "rating", default: 0
+    t.boolean "display", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_reviews_on_hotels_id"
+    t.index ["users_id"], name: "index_reviews_on_users_id"
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

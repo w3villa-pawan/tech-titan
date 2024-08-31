@@ -6,6 +6,7 @@ class CreateBooking < ActiveRecord::Migration[7.2]
       t.datetime :check_in
       t.datetime :check_out
       t.decimal :price
+      t.string :status, default: 'booked'
 
       t.timestamps
     end
