@@ -24,6 +24,7 @@ gem "devise"
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-google-oauth2'
 
+# gem 'webpacker'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -56,6 +57,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'pry'
 end
 
 group :test do
@@ -63,3 +65,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "groq", "~> 0.3.2"
+
+gem 'stripe'
+
