@@ -10,7 +10,126 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_30_113734) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
+  create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "zipcode"
+    t.string "phone"
+    t.string "state_name"
+    t.string "alternative_phone"
+    t.string "company"
+    t.string "longitude"
+    t.string "latitude"
+    t.string "country_name"
+    t.bigint "hotels_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_addresses_on_hotels_id"
+  end
+
+  create_table "bookings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "hotels_id"
+    t.bigint "users_id"
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.decimal "price", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_bookings_on_hotels_id"
+    t.index ["users_id"], name: "index_bookings_on_users_id"
+  end
+
+  create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "senders_id"
+    t.bigint "receivers_id"
+    t.bigint "hotels_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_chats_on_hotels_id"
+    t.index ["receivers_id"], name: "index_chats_on_receivers_id"
+    t.index ["senders_id"], name: "index_chats_on_senders_id"
+  end
+
+  create_table "hotel_properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "hotels_id"
+    t.bigint "properties_id"
+    t.boolean "display", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_hotel_properties_on_hotels_id"
+    t.index ["properties_id"], name: "index_hotel_properties_on_properties_id"
+  end
+
+  create_table "hotel_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", default: "hotel"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hotels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.text "description"
+    t.bigint "hotel_type_id"
+    t.integer "total_rooms", default: 0
+    t.integer "available_rooms", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_type_id"], name: "index_hotels_on_hotel_type_id"
+    t.index ["user_id"], name: "index_hotels_on_user_id"
+  end
+
+  create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "body"
+    t.bigint "senders_id"
+    t.bigint "receivers_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receivers_id"], name: "index_messages_on_receivers_id"
+    t.index ["senders_id"], name: "index_messages_on_senders_id"
+  end
+
+  create_table "properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "active"
+    t.string "unique_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "hotels_id"
+    t.integer "rating", default: 0
+    t.boolean "display", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotels_id"], name: "index_reviews_on_hotels_id"
+    t.index ["users_id"], name: "index_reviews_on_users_id"
+  end
+
+  create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
