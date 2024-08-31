@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_084947) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_113214) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_084947) do
     t.integer "available_rooms", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price", precision: 10
     t.index ["hotel_type_id"], name: "index_hotels_on_hotel_type_id"
     t.index ["user_id"], name: "index_hotels_on_user_id"
   end

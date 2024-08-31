@@ -1,0 +1,103 @@
+<%= render "users/shared/header" %>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Hotel Image and Info -->
+    <div class="col-md-6">
+      <div class="card mb-4 shadow-sm hotel-show-card">
+        <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="<%= @hotel.name %>">
+        <div class="card-body">
+          <h2 class="card-title"><%= @hotel.name %></h2>
+          <p class="card-text"><%= @hotel.description %></p>
+          <p class="text-muted"><strong>Hotel Type:</strong> <%= @hotel.hotel_type.name %></p>
+          <p class="text-muted"><strong>Total Rooms:</strong> <%= @hotel.total_rooms %></p>
+          <p class="text-muted"><strong>Available Rooms:</strong> <%= @hotel.available_rooms %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information: Properties, Rooms, Bookings, Reviews -->
+    <div class="col-md-6">
+      <!-- Properties -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h5>Properties</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @hotel.properties.each do |property| %>
+            <li class="list-group-item"><%= property.name %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- Rooms -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h5>Rooms</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @hotel.rooms.each do |room| %>
+            <li class="list-group-item">Room Number: 5, Type: Luxurious</li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- Bookings -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h5>Bookings</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @hotel.bookings.each do |booking| %>
+            <li class="list-group-item">
+              Guest: John
+
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- Reviews -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h5>Reviews</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @hotel.reviews.each do |review| %>
+            <li class="list-group-item">
+              <strong>Rating:</strong> <%= review.rating %> - <%= review.comment %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="card mb-4 shadow-sm hotel-book-form">
+        <div class="card-header">
+          <h5>Book This Hotel</h5>
+        </div>
+        <div class="card-body">
+          <%= form_with model: [@hotel, @hotel.bookings.build], url: hotel_bookings_path(@hotel), local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :check_in, class: 'form-label' %>
+              <%= form.datetime_select :check_in, class: 'form-control' %>
+            </div>
+          
+            <div class="mb-3">
+              <%= form.label :check_out, class: 'form-label' %>
+              <%= form.datetime_select :check_out, class: 'form-control' %>
+            </div>
+          
+            <div class="mb-3">
+              <%= form.label :price, class: 'form-label' %>
+              <%= form.number_field :price, step: '0.01', class: 'form-control', value: @hotel.price, readonly: true %> <!-- Use @hotel.price here -->
+            </div>
+          
+            <%= form.hidden_field :user_id, value: current_user.id %>
+          
+            <div class="mb-3">
+              <%= form.submit 'Book Now', class: 'btn btn-success' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<!-- app/views/bookings/index.html.erb -->
+<h1>All Bookings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Hotel</th>
+      <th>Check In</th>
+      <th>Check Out</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.id %></td>
+        <td><%= booking.user.email %></td>
+        <td><%= booking.hotel.name %></td>
+        <td><%= booking.check_in %></td>
+        <td><%= booking.check_out %></td>
+        <td><%= number_to_currency(booking.price) %></td>
+        <td><%= booking.status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
