@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
+@import "toast-styles";
+@import 'header';
+@import "components";
+@import "global";

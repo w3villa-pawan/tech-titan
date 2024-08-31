@@ -1,0 +1,69 @@
+
+// Mixin for Button Styles
+@mixin button-style($bg-color, $hover-color, $text-color: #fff) {
+    background-color: $bg-color;
+    color: $text-color;
+    border-radius: 2px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+  
+  // Button Utility Classes
+  .btn-blue {
+    @include button-style(#1A237E, #000);
+  }
+  
+  .btn-red {
+    @include button-style(#e53935, #b71c1c);
+  }
+  
+  // Mixin for Input Styles
+  @mixin input-style {
+    padding: 10px 12px;
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #2C3E50;
+    font-size: 14px;
+    letter-spacing: 1px;
+  
+    &:focus {
+      box-shadow: none !important;
+      border: 1px solid #304FFE;
+      outline-width: 0;
+    }
+  }
+  
+  // Input Utility Class
+  .input-default {
+    @include input-style;
+  }
+  
+  // Mixin for Checkbox Styles
+  @mixin checkbox-style {
+    margin-left: auto;
+    font-size: 14px;
+  }
+  
+  // Checkbox Utility Class
+  .checkbox-custom {
+    @include checkbox-style;
+  }
+  
+  // Common Label Style
+  .label-style {
+    margin-bottom: 0.25rem;
+  
+    h6 {
+      margin-bottom: 0;
+      font-size: 14px !important;
+    }
+  }
+  

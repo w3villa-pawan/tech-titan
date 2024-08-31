@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_31_060324) do
   create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -25,43 +25,44 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.string "longitude"
     t.string "latitude"
     t.string "country_name"
-    t.bigint "hotels_id"
+    t.bigint "hotel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_addresses_on_hotels_id"
+    t.index ["hotel_id"], name: "index_addresses_on_hotel_id"
   end
 
   create_table "bookings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "hotels_id"
-    t.bigint "users_id"
+    t.bigint "hotel_id"
+    t.bigint "user_id"
     t.datetime "check_in"
     t.datetime "check_out"
     t.decimal "price", precision: 10
+    t.string "status", default: "booked"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_bookings_on_hotels_id"
-    t.index ["users_id"], name: "index_bookings_on_users_id"
+    t.index ["hotel_id"], name: "index_bookings_on_hotel_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "senders_id"
-    t.bigint "receivers_id"
-    t.bigint "hotels_id"
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
+    t.bigint "hotel_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_chats_on_hotels_id"
-    t.index ["receivers_id"], name: "index_chats_on_receivers_id"
-    t.index ["senders_id"], name: "index_chats_on_senders_id"
+    t.index ["hotel_id"], name: "index_chats_on_hotel_id"
+    t.index ["receiver_id"], name: "index_chats_on_receiver_id"
+    t.index ["sender_id"], name: "index_chats_on_sender_id"
   end
 
   create_table "hotel_properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "hotels_id"
-    t.bigint "properties_id"
+    t.bigint "hotel_id"
+    t.bigint "property_id"
     t.boolean "display", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_hotel_properties_on_hotels_id"
-    t.index ["properties_id"], name: "index_hotel_properties_on_properties_id"
+    t.index ["hotel_id"], name: "index_hotel_properties_on_hotel_id"
+    t.index ["property_id"], name: "index_hotel_properties_on_property_id"
   end
 
   create_table "hotel_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -86,12 +87,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
 
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "body"
-    t.bigint "senders_id"
-    t.bigint "receivers_id"
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["receivers_id"], name: "index_messages_on_receivers_id"
-    t.index ["senders_id"], name: "index_messages_on_senders_id"
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
   create_table "properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -104,14 +105,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "hotels_id"
+    t.bigint "user_id"
+    t.bigint "hotel_id"
     t.integer "rating", default: 0
     t.boolean "display", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["hotels_id"], name: "index_reviews_on_hotels_id"
-    t.index ["users_id"], name: "index_reviews_on_users_id"
+    t.index ["hotel_id"], name: "index_reviews_on_hotel_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -119,6 +120,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_31_055122) do
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "hotel_id"
+    t.integer "no_of_people", default: 1
+    t.decimal "price", precision: 10, default: "0"
+    t.boolean "active", default: true
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hotel_id"], name: "index_rooms_on_hotel_id"
+
   end
 
   create_table "user_roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

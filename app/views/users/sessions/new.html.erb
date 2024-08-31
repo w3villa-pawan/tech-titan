@@ -1,26 +1,79 @@
-<h2>Log in</h2>
+<%#= render "users/shared/links" %>
+<div class="auth-page">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row">
+                        <img src="https://i.imgur.com/CXQmsmF.png" class="logo">
+                    </div>
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
+                        <img src="https://i.imgur.com/uNGdWHi.png" class="image">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                  <%- if devise_mapping.omniauthable? %>
+                    <h6 class="mb-0 mr-4 mt-2 mb-2">Sign in with</h6>
+                    <div class="row mb-4 px-3">
+                      <%- resource_class.omniauth_providers.each do |provider| %>
+                        <%= button_to "/users/auth/#{provider}", data: { turbo: false }, class: "#{provider.downcase} google  text-center mr-3" do %>
+                            <div class="fa fa-google fa-#{provider.downcase}"></div>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                    <div class="row px-3 mb-4">
+                        <div class="line"></div>
+                        <small class="or text-center">Or</small>
+                        <div class="line"></div>
+                    </div>
+                    <div class="row mb-3 px-3">
+                        <div class="field">
+                        </div>
+                        <div class="row px-3">
+                          <%= f.label :email, class: "mb-1" do %>
+                            <h6 class="mb-0 text-sm">Email Address</h6>
+                          <% end %>
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter a valid email address" %>
+                        </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+                        <div class="row px-3">
+                          <%= f.label :password, class: "mb-1" do %>
+                            <h6 class="mb-0 text-sm">Password</h6>
+                           <% end %>
+                          <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter password" %>
+                        </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+                        <% if devise_mapping.rememberable? %>
+                          <div class="row px-3 mb-4">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <%= f.check_box :remember_me, class: "custom-control-input" %>
+                                <label for="chk1" class="custom-control-label text-sm">Remember me</label>
+                            </div>
+                            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                              <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+                              <br />
+                            <% end %>
+                        </div>
+                        <% end %>
+                        <div class="row mb-3 px-3">
+                          <%= f.submit "Log in", class: "btn btn-blue text-center" %>
+                      </div>
+                    </div>
+                  <% end %>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+
+                    <div class="row mb-4 px-3">
+                      <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                        <small class="font-weight-bold">Don't have an account? <%= link_to "Sign up", new_registration_path(resource_name), class:"text-danger" %></small>
+                      <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <%= render "users/shared/footer" %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>
