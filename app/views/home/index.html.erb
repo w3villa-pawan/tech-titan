@@ -1,10 +1,26 @@
 <%= render "users/shared/header" %>
-<h1>All Hotels</h1>
-
-<% @hotels.each do |hotel| %>
-  <div class="hotel">
-    <h2><%= hotel.name %></h2>
-    <p><%= hotel.description %></p>
-    <p>Available Rooms: <%= hotel.available_rooms %></p>
-  </div>
-<% end %>
+<section class="bg-white">
+    <div class="container mt-4">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+        <% @hotels.each do |hotel| %>
+            <div class="col">
+                <a href="/landing-page-show" class="card-link">
+                    <div class="card">
+                        <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="Stunning Views">
+                    </div>
+                </a>
+                <div class="card-body">
+                    <p class="mt-1 text-muted small"><%= hotel.name %></p>
+                    <p class="mt-1 text-muted small"><%= hotel.description %></p>
+                    <p class="mt-1 text-dark small">
+                    <span class="fw-semibold">$80</span> night
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Available Rooms: <%= hotel.available_rooms %></small>
+                </div>
+            </div>
+        <% end %>
+        </div>
+    </div>
+</section>
