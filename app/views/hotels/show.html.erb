@@ -4,7 +4,11 @@
     <!-- Hotel Image and Info -->
     <div class="col-md-6">
       <div class="card mb-4 shadow-sm hotel-show-card">
+       <% if @hotel.images.attached? && @hotel.images.first %>
+          <%= image_tag @hotel.images.first, class: 'card-img-top', alt: @hotel.name %>
+        <% else %>
         <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="<%= @hotel.name %>">
+        <% end %>
         <div class="card-body">
           <h2 class="card-title"><%= @hotel.name %></h2>
           <p class="card-text"><%= @hotel.description %></p>

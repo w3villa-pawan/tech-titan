@@ -1,28 +1,123 @@
 <%= render "users/shared/header" %>
+
 <section class="bg-white">
-    <div class="container mt-4">
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-        <% @hotels.each do |hotel| %>
-            <div class="col">
-              <%= link_to hotel_path(hotel), class: "card-link" do %>
-                    <div class="card">
-                        <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="Stunning Views">
-                    </div>
-                </a>
-                <div class="card-body">
-                    <p class="mt-1 text-muted small"><%= hotel.name %></p>
-                    <p class="mt-1 text-muted small"><%= hotel.description %></p>
-                    <p class="mt-1 text-dark small">
-                    <span class="fw-semibold">$80</span> night
-                    <%= button_to "Chat", create_chat_user_path(hotel.user), method: :post, class: "btn btn-primary" %>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">Available Rooms: <%= hotel.available_rooms %></small>
-                </div>
-                <% end %>
-            </div>
-        <% end %>
-        </div>
+  <div class="container mt-4">
+    <!-- Search Suggestions Container -->
+    <div class="search-container mb-4">
+      <input type="text" id="location" placeholder="Search for hotels..." class="form-control" />
+      <div class="search-suggestions" id="search-suggestions"></div>
     </div>
+
+    <!-- Hotel Listing -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <% @hotels.each do |hotel| %>
+        <div class="col">
+          <%= link_to hotel_path(hotel), class: "card-link" do %>
+            <div class="card">
+              <% if hotel.images.attached? && hotel.images.first %>
+                <%= image_tag hotel.images.first, class: 'card-img-top', alt: hotel.name %>
+              <% else %>
+                <img src="<%= asset_path 'hotel-room.jpg' %>" class="card-img-top" alt="Stunning Views">
+              <% end %>
+            </div>
+          <% end %>
+          <div class="card-body">
+            <p class="mt-1 text-muted small"><%= hotel.name %></p>
+            <p class="mt-1 text-muted small"><%= hotel.description %></p>
+            <p class="mt-1 text-dark small">
+              <span class="fw-semibold">$80</span> night
+              <%= button_to "Chat", create_chat_user_path(hotel.user), method: :post, class: "btn btn-primary" %>
+            </p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Available Rooms: <%= hotel.available_rooms %></small>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </section>
+
+<style>
+/* CSS for search suggestions */
+.search-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-suggestions {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const locationInput = document.getElementById('location');
+  const suggestionsContainer = document.getElementById('search-suggestions');
+  let debounceTimeout;
+
+  locationInput.addEventListener('input', function () {
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(() => {
+      if (locationInput.value.length > 2) { // Trigger suggestions after 2 characters
+        fetchSuggestions(locationInput.value);
+      } else {
+        suggestionsContainer.style.display = 'none';
+      }
+    }, 300); // Debounce delay to limit API calls
+  });
+
+  function fetchSuggestions(query) {
+    fetch('/fetch_suggestions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify({ query: query }) // Send query to the API
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.suggestions) {
+        displaySuggestions(data.suggestions);
+      } else {
+        displaySuggestions([]); // Clear suggestions if no data
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching suggestions:', error);
+    });
+  }
+
+  function displaySuggestions(suggestions) {
+    suggestionsContainer.innerHTML = suggestions.map(suggestion => 
+      `<div class="suggestion-item">${suggestion}</div>`
+    ).join('');
+    suggestionsContainer.style.display = 'block';
+  }
+
+  suggestionsContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('suggestion-item')) {
+      locationInput.value = e.target.textContent;
+      suggestionsContainer.style.display = 'none';
+    }
+  });
+});
+</script>
