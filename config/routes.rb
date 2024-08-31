@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :hotels do
     resources :bookings, only: [:new, :create, :show, :edit, :update, :destroy] do
-      resources :payments, only: [:new, :create]
+      resources :payments, only: [:new, :create, :index]
       get 'payments/complete', to: 'payments#complete'
     end
   end
