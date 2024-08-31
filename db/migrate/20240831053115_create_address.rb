@@ -14,7 +14,7 @@ class CreateAddress < ActiveRecord::Migration[7.2]
       t.string     :longitude
       t.string     :latitude
       t.string :country_name
-      t.references :hotels
+      t.references :hotel
 
       t.timestamps
     end
