@@ -13,13 +13,14 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p> 
-    <p class="alert"><%= alert %></p> 
+    <p class="notice toaster-classes"><%= notice %></p> 
+    <p class="alert toaster-classes"><%= alert %></p> 
     <%= yield %>
   </body>
 </html>
