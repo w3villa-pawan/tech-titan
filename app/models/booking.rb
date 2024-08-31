@@ -6,7 +6,7 @@ class Booking < ApplicationRecord
   validates :check_in, presence: true
   validates :check_out, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
-  validates :status, inclusion: { in: %w[booked checked_in checked_out cancelled] }
+  validates :status, inclusion: { in: %w[pending booked checked_in checked_out cancelled] }
 
   #validate :check_in_before_check_out
 
