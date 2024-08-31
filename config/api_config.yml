@@ -1,0 +1,9 @@
+development:
+  host_url: http://localhost:3000
+  stripe_publishable_key: pk_test_51PtkbaSJznckSqVK44POEZRyvyC8RV6m59vNOR4kj5oVH6dkSi3cF7M84zzKIiLZv7tKBapPCa0gZEOBDuCeVJjd00qCdhf12T
+  stripe_secret_key: sk_test_51PtkbaSJznckSqVK2VFTUKoiS6Cp9la8PUp62aOkLKuQiSW8Zah21Jl4cJmEybw0CvnDYtFe3T0fFkHepBHhBQtr00HaAaLfHh
+
+production:
+  host_url: https://20.244.43.88
+  stripe_publishable_key: pk_test_51PtkbaSJznckSqVK44POEZRyvyC8RV6m59vNOR4kj5oVH6dkSi3cF7M84zzKIiLZv7tKBapPCa0gZEOBDuCeVJjd00qCdhf12T
+  stripe_secret_key: sk_test_51PtkbaSJznckSqVK2VFTUKoiS6Cp9la8PUp62aOkLKuQiSW8Zah21Jl4cJmEybw0CvnDYtFe3T0fFkHepBHhBQtr00HaAaLfHh
