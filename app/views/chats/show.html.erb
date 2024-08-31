@@ -15,25 +15,17 @@
   </div>
 
   <%= form_with(model: [@user, @chat, @message], 
-              local: false,  # Ensure this is set to false for remote submission
-              class: "message-form",
-              remote: true, 
-              data: { 
-                controller: "chat-subscription",  # Correct controller name
-                action: "turbo:submit-end->chat-subscription#afterMessageSent"
-              }) do |f| %>
-  <div class="message-input">
-    <%= f.text_area :body,
-      placeholder: "Message to #{profile_to_show.fullname}",
-      rows: 1,
-      class: "form-control",
-      data: { 
-        chat_subscription_target: "messageInput",
-        action: "keydown->chat-subscription#submitOnEnter"
-      } %>
-  </div>
-  <%= f.submit "Send", class: "btn btn-primary send-btn" %>
-<% end %>
+    local: true, 
+    data: { action: "turbo:submit-end->chat-subscription#resetForm" }, 
+    class: "d-flex") do |form| %>
+
+  <%= form.text_area :body, 
+      placeholder: "Message to #{profile_to_show.nickname}", 
+      class: "flex-grow-1", 
+      rows: 3 %>
+
+  <%= form.submit "Send", class: "btn btn-primary mb-3" %>
+  <% end %>
 </div>
 
 <style>

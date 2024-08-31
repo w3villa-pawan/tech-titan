@@ -4,6 +4,7 @@ class ChatChannel < ApplicationCable::Channel
     if params[:id].present?
       @chat = Chat.find(params[:id])
     end
+    stream_for @chat
   end
 
   def unsubscribed

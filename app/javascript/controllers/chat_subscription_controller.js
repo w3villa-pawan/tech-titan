@@ -12,7 +12,7 @@ export default class extends Controller {
       {
         received: (data) => {
           console.log("Received data:", data);
-          this.#insertMessage(data.message);
+          this.#insertMessage(data);
         }
       }
     )
@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   #insertMessage(message) {
-    this.messagesTarget.insertAdjacentHTML("beforeend", message)
+    this.messagesTarget.insertAdjacentHTML("beforeend", data)
     this.#scrollToBottom()
   }
 
