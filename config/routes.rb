@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root "home#index"
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    sessions: "users/sessions",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "/landing-page", to: "welcome#index"
+  get "/landing-page-show", to: "welcome#show"
 
   # Defines the root path route ("/")
 end

@@ -1,0 +1,43 @@
+<div class="container mt-6">
+  <div class="row">
+    <!-- Wide Image Column -->
+    <div class="col-lg-8 d-none d-lg-block">
+      <img src="<%= asset_path 'welcome/1-Stunning-Views-scaled.jpg' %>" class="img-fluid h-100 w-100 object-cover rounded-start" alt="Stunning Views">
+    </div>
+    <!-- Smaller Images Column 1 -->
+    <div class="col-lg-4 d-none d-lg-flex flex-column g-2">
+      <div class="flex-grow-1 overflow-hidden mb-2 rounded-top">
+        <img src="<%= asset_path 'welcome/1-Stunning-Views-scaled.jpg' %>" class="img-fluid h-100 w-100 object-cover" alt="Stunning Views">
+      </div>
+      <div class="flex-grow-1 overflow-hidden rounded-bottom">
+        <img src="<%= asset_path 'welcome/1-Stunning-Views-scaled.jpg' %>" class="img-fluid h-100 w-100 object-cover" alt="Stunning Views">
+      </div>
+    </div>
+    <!-- Smaller Images Column 2 -->
+    <div class="col-lg-4 d-none d-lg-flex flex-column g-2">
+      <div class="flex-grow-1 overflow-hidden rounded-top">
+        <img src="<%= asset_path 'welcome/1-Stunning-Views-scaled.jpg' %>" class="img-fluid h-100 w-100 object-cover" alt="Stunning Views">
+      </div>
+      <div class="flex-grow-1 overflow-hidden rounded-bottom">
+        <img src="<%= asset_path 'welcome/1-Stunning-Views-scaled.jpg' %>" class="img-fluid h-100 w-100 object-cover" alt="Stunning Views">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .aspect-ratio-2x3 {
+    position: relative;
+    width: 100%;
+    padding-top: 150%; /* 2/3 ratio */
+  }
+  .aspect-ratio-2x3 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
