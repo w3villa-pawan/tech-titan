@@ -8,6 +8,7 @@
         <div class="card-body">
           <h2 class="card-title"><%= @hotel.name %></h2>
           <p class="card-text"><%= @hotel.description %></p>
+          <p class="text-muted"><strong>Hotel Address:</strong> <%= @hotel.address.address1 + " "+ @hotel.address.address2 + ", "+ @hotel.address.city + " "+ @hotel.address.state_name + ", "+ @hotel.address.zipcode %> </p>
           <p class="text-muted"><strong>Hotel Type:</strong> <%= @hotel.hotel_type.name %></p>
           <p class="text-muted"><strong>Total Rooms:</strong> <%= @hotel.total_rooms %></p>
           <p class="text-muted"><strong>Available Rooms:</strong> <%= @hotel.available_rooms %></p>
@@ -41,21 +42,6 @@
         </ul>
       </div>
 
-      <!-- Bookings -->
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h5>Bookings</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <% @hotel.bookings.each do |booking| %>
-            <li class="list-group-item">
-              Guest: John
-
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
       <!-- Reviews -->
       <div class="card mb-4 shadow-sm">
         <div class="card-header">
@@ -64,7 +50,7 @@
         <ul class="list-group list-group-flush">
           <% @hotel.reviews.each do |review| %>
             <li class="list-group-item">
-              <strong>Rating:</strong> <%= review.rating %> - <%= review.comment %>
+              <strong>Rating:</strong> <%= review.rating %>
             </li>
           <% end %>
         </ul>
