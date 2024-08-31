@@ -84,7 +84,7 @@ class PaymentsController < ApplicationController
   def create_customer(user)
     Stripe::Customer.create({
       email: user.email,
-      name: user.fullname,
+      name: "Test User",
       address: {
         city: 'Mumbai',
         country: 'India',
