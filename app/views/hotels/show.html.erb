@@ -45,21 +45,6 @@
         </ul>
       </div>
 
-      <!-- Bookings -->
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h5>Bookings</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <% @hotel.bookings.each do |booking| %>
-            <li class="list-group-item">
-              Guest: John
-
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
       <!-- Reviews -->
       <div class="card mb-4 shadow-sm">
         <div class="card-header">
@@ -68,7 +53,7 @@
         <ul class="list-group list-group-flush">
           <% @hotel.reviews.each do |review| %>
             <li class="list-group-item">
-              <strong>Rating:</strong> <%= review.rating %> - <%= review.comment %>
+              <strong>Rating:</strong> <%= review.rating %>
             </li>
           <% end %>
         </ul>

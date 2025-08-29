@@ -13,6 +13,7 @@ RailsAdmin.config do |config|
       field :total_rooms
       field :available_rooms
       field :images
+      field :price
     end
   end
 

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   }
   resources :bookings, only: [:index,:show]
   resources :hotels do
-    resources :bookings, only: [:new, :create] do
+    resources :bookings, only: [:new, :create, :show] do
       resources :payments, only: [:new, :create, :index]
       get 'payments/complete', to: 'payments#complete'
     end

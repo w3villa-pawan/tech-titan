@@ -15,9 +15,9 @@ class BookingsController < ApplicationController
     def create
       @booking = @hotel.bookings.build(booking_params)
       @booking.user = current_user
-  
+      @booking.status = 'pending'
       if @booking.save
-        redirect_to @booking, notice: 'Booking was successfully created.'
+        redirect_to new_hotel_booking_payment_path(@hotel, @booking), notice: 'Booking was successfully created.'
       else
         render :new
       end
