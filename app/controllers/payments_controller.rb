@@ -64,7 +64,7 @@ class PaymentsController < ApplicationController
   end
 
   def complete_payment_url
-    "#{API_CONFIG['host_url']}/hotels/#{@hotel.id}/bookings/#{@booking.id}/payments/complete"
+    "#{Rails.application.config_for(:api_config)['host_url']}/hotels/#{@hotel.id}/bookings/#{@booking.id}/payments/complete"
   end
 
   def finalize_payment(payment_intent)
