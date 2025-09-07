@@ -116,7 +116,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var stripe = Stripe('<%= API_CONFIG['stripe_publishable_key'] %>');
+      var stripe = Stripe('<%= Rails.application.config_for(:api_config)['stripe_publishable_key'] %>');
       var elements = stripe.elements();
       var card = elements.create('card');
       card.mount('#card-element');
