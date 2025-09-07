@@ -7,19 +7,22 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @amount = params[:amount].to_i * 100 # Convert to cents
-  
+    amount_param = params[:amount]
+    unless amount_param.present? && amount_param.to_s.match?(/\A\d+(\.\d{1,2})?\z/)
+      return render json: { error: 'Invalid amount' }, status: :unprocessable_entity
+    end
+
+    @amount = (BigDecimal(amount_param.to_s) * 100).to_i
+
     payment_intent = create_payment_intent
 
     if payment_intent.status.in?(['requires_action', 'requires_source_action'])
       render json: { client_secret: payment_intent.client_secret, redirect_url: payment_intent.next_action.redirect_to_url.url }
     else
-      redirect_to root_path, notice: 'Payment successful!'
+      render json: { status: 'succeeded' }
     end
-      
   rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_payment_path
+    render json: { error: e.message }, status: :payment_required
   end
 
   def complete
@@ -39,8 +42,7 @@ class PaymentsController < ApplicationController
     end
 
   rescue Stripe::StripeError => e
-    flash[:error] = e.message
-    redirect_to new_payment_path
+    redirect_to new_hotel_booking_payment_path(@hotel, @booking), alert: e.message
   end
 
   private
