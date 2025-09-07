@@ -49,7 +49,9 @@ class BookingsController < ApplicationController
     end
   
     def set_booking
-      @booking = Booking.find(params[:id])
+      @booking = current_user.bookings.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to bookings_path, alert: 'Booking not found or access denied.'
     end
   
     def booking_params
