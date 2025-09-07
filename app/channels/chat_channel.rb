@@ -1,10 +1,12 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
-    if params[:id].present?
-      @chat = Chat.find(params[:id])
-    end
-    stream_for @chat
+    reject and return unless params[:id].present?
+
+    chat = Chat.find_by(id: params[:id])
+    reject and return unless chat
+
+    stream_for chat
   end
 
   def unsubscribed
