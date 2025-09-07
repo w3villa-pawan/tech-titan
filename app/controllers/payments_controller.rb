@@ -7,7 +7,9 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @amount = params[:amount].to_i * 100 # Convert to cents
+    # Always calculate the payable amount from the booking record to avoid
+    # tampering with client-supplied values.
+    @amount = (@booking.price * 100).to_i # Convert to cents
   
     payment_intent = create_payment_intent
 

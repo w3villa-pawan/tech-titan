@@ -9,7 +9,8 @@ class MessagesController < ApplicationController
     @message.receiver_id = @chat.receiver_id
 
     if @message.save
-      ActionCable.server.broadcast "chat_channel", { mod_message: render_to_string(partial: 'message', locals: { message: @message }) }
+      # Broadcast only to subscribers of this chat instance instead of a global channel
+      ChatChannel.broadcast_to(@chat, { mod_message: render_to_string(partial: 'message', locals: { message: @message }) })
       redirect_to request.referrer
    end
   end
