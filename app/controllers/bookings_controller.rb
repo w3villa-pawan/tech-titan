@@ -4,9 +4,9 @@ class BookingsController < ApplicationController
     before_action :set_booking, only: [:show, :edit, :update, :destroy]
   
 
-    def index
-      @bookings = Booking.all
-    end
+  def index
+    @bookings = current_user.bookings
+  end
 
     def new
       @booking = @hotel.bookings.build
@@ -48,9 +48,9 @@ class BookingsController < ApplicationController
       @hotel = Hotel.find(params[:hotel_id])
     end
   
-    def set_booking
-      @booking = Booking.find(params[:id])
-    end
+  def set_booking
+    @booking = current_user.bookings.find(params[:id])
+  end
   
     def booking_params
       params.require(:booking).permit(:check_in, :check_out, :price, :status)
