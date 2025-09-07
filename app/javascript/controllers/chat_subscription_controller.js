@@ -1,18 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
-import { createConsumer } from "@rails/actioncable"
+import consumer from "../channels/consumer"
 
 export default class extends Controller {
   static targets = ["messages"]
-  static values = { ChatId: Number }
+  static values = { chatId: Number }
 
   connect() {
-    console.log(`Connecting to ChatChannel with ID ${this.ChatIdValue}`)
-    this.channel = createConsumer().subscriptions.create(
-      { channel: "ChatChannel", id: this.ChatIdValue },
+    console.log(`Connecting to ChatChannel with ID ${this.chatIdValue}`)
+    this.channel = consumer.subscriptions.create(
+      { channel: "ChatChannel", id: this.chatIdValue },
       {
         received: (data) => {
-          console.log("Received data:", data);
-          this.#insertMessage(data);
+          console.log("Received data:", data)
+          this.#insertMessage(data)
         }
       }
     )
@@ -22,8 +22,19 @@ export default class extends Controller {
     this.#scrollToBottom()
   }
 
-  #insertMessage(message) {
-    this.messagesTarget.insertAdjacentHTML("beforeend", data)
+  #insertMessage(data) {
+    if (!data) return
+    // Prefer sanitized HTML provided by the server. If not present, fall back to plain text.
+    if (data.html) {
+      this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
+    } else if (data.text || data.message || data.body) {
+      const text = data.text || data.message || data.body
+      const paragraph = document.createElement("p")
+      paragraph.textContent = String(text)
+      this.messagesTarget.appendChild(paragraph)
+    } else {
+      return
+    }
     this.#scrollToBottom()
   }
 
@@ -33,7 +44,7 @@ export default class extends Controller {
 
   disconnect() {
     console.log("Unsubscribed from the Chat")
-    this.channel.unsubscribe()
+    if (this.channel) this.channel.unsubscribe()
   }
 
   resetForm(event) {
